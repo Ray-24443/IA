@@ -1,0 +1,12 @@
+hour=int(input("Hora de inicio (horas): "))
+mins=int(input("Hora de inicio (minutos): "))
+dura=int(input("Duracion del evento(minutos): "))
+
+hour_to_mins=hour*60
+sum0=hour_to_mins + mins
+sum=dura+sum0 
+
+hourtotal=sum//60
+minutestotal=sum % 60
+
+print("La hora en la que termina el evento es: ", hourtotal, ":", minutestotal)
