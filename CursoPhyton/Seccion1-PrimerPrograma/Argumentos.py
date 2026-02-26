@@ -1,0 +1,2 @@
+print("Programming", "Essentials", "in",sep="***",end="...")#Las palabras dentro de esta funcion estaran separadas por ***
+print("Phyton")#Esta linea de codigo se muestra despues del argumento end "..." 

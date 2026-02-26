@@ -1,0 +1,1 @@
+print("Un elefante se balanceaba", "sobre la tela de una araña", "como veia que resistia fuero a llamar otro elefante")#multiples argumentos en una sola linea de texto
