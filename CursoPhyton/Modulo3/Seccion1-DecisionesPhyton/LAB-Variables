@@ -1,0 +1,2 @@
+n = int(input("Ingresa un número: "))#el usuario ingresa un numero
+print(n >= 100)#se imprime el resultado de esta comparacion
