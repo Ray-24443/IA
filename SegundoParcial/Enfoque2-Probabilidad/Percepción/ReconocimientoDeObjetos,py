@@ -1,0 +1,83 @@
+# -----------------------------------------------------------
+# RECONOCIMIENTO DE OBJETOS
+# -----------------------------------------------------------
+
+# Importamos la librería OpenCV
+import cv2
+
+# Importamos NumPy para trabajar con matrices
+import numpy as np
+
+# Creamos una imagen negra de 400x400 píxeles
+imagen = np.zeros((400, 400, 3), dtype="uint8")
+
+# Dibujamos un círculo blanco en la imagen
+cv2.circle(imagen, (100, 200), 50, (255, 255, 255), -1)
+
+# Dibujamos un rectángulo blanco en la imagen
+cv2.rectangle(imagen, (220, 150), (320, 250), (255, 255, 255), -1)
+
+# Convertimos la imagen a escala de grises
+gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
+
+# Aplicamos un umbral para separar objetos del fondo
+_, umbral = cv2.threshold(gris, 127, 255, cv2.THRESH_BINARY)
+
+# Buscamos los contornos de los objetos
+contornos, _ = cv2.findContours(
+    umbral,
+    cv2.RETR_EXTERNAL,
+    cv2.CHAIN_APPROX_SIMPLE
+)
+
+# Recorremos cada contorno encontrado
+for contorno in contornos:
+
+    # Calculamos el perímetro del contorno
+    perimetro = cv2.arcLength(contorno, True)
+
+    # Aproximamos la forma geométrica
+    aproximacion = cv2.approxPolyDP(
+        contorno,
+        0.04 * perimetro,
+        True
+    )
+
+    # Obtenemos coordenadas del objeto
+    x, y, w, h = cv2.boundingRect(aproximacion)
+
+    # Si tiene 4 lados es rectángulo
+    if len(aproximacion) == 4:
+
+        # Dibujamos el nombre del objeto
+        cv2.putText(
+            imagen,
+            "Rectangulo",
+            (x, y - 10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            (0, 255, 0),
+            2
+        )
+
+    else:
+
+        # Dibujamos el nombre del objeto
+        cv2.putText(
+            imagen,
+            "Circulo",
+            (x, y - 10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            (0, 255, 0),
+            2
+        )
+
+# Mostramos la imagen final
+cv2.imshow("Reconocimiento de Objetos", imagen)
+
+# Esperamos una tecla
+cv2.waitKey(0)
+
+# Cerramos ventanas
+cv2.destroyAllWindows()
